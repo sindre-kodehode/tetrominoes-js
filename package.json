@@ -1,0 +1,14 @@
+{
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "ecmaFeatures": {
+        "impliedStrict": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "es2022":true
+    }
+  }
+}

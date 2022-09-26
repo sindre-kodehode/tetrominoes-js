@@ -1,0 +1,13 @@
+table {
+  margin : 1rem auto ;
+}
+
+td {
+  height : 1rem            ;
+  width  : 1rem            ;
+  border : 1px solid black ;
+}
+
+.active {
+  background : red ;
+}
