@@ -61,7 +61,8 @@ class Piece {
       for ( let j = 0; j < dimension; j++ )
         newShape[ j ][ dimension - 1 - i ] = this.shape[ i ][ j ];
 
-    this.shape = newShape;
+    if ( !this.checkCollisionX( newShape ) )
+      this.shape = newShape;
   }
 
   reset() {
@@ -101,10 +102,10 @@ class Piece {
     return collision;
   }
 
-  checkCollisionX() {
+  checkCollisionX( shape ) {
     let collision = false;
 
-    this.shape.forEach( ( e, i ) => {
+    shape.forEach( ( e, i ) => {
       e.forEach( ( f, j ) => {
         const k = this.x + this.y * WIDTH + trans( j, i );
         if ( this.playfield[ k ] && f ) collision = true;
@@ -120,13 +121,13 @@ class Piece {
 
   moveLeft()  { 
     this.x--;
-    if ( this.checkCollisionX() )
+    if ( this.checkCollisionX( this.shape ) )
       this.x++;
   }
 
   moveRight() {
     this.x++;
-    if ( this.checkCollisionX() )
+    if ( this.checkCollisionX( this.shape ) )
       this.x--;
   }
 }
