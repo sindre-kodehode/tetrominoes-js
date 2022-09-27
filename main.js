@@ -46,7 +46,7 @@ class Piece {
     this.reset();
     this.interval  = setInterval( () => {
       this.y++;
-      if ( this.checkCollision( this.shape ) ) {
+      if ( this.collision() ) {
         this.y--;
         this.draw();
         this.reset();
@@ -65,16 +65,14 @@ class Piece {
       for ( let j = 0; j < dimension; j++ )
         newShape[ j ][ dimension - 1 - i ] = this.shape[ i ][ j ];
 
-    if ( !this.checkCollision( newShape ) )
+    if ( !this.collision( newShape ) )
       this.shape = newShape;
   }
 
   reset() {
-    this.x      = 4;
-    this.y      = 0;
-    this.shape  = shapes[ Math.floor( Math.random() * shapes.length ) ];
-    this.height = this.shape.length;
-    this.width  = this.shape[0].length;
+    this.x     = 4;
+    this.y     = 0;
+    this.shape = shapes[ Math.floor( Math.random() * shapes.length ) ];
     this.playfield.checkLines();
   }
 
@@ -87,10 +85,10 @@ class Piece {
     })
   }
 
-  checkCollision() { 
+  collision( shape=this.shape ) { 
     let collision = false;
 
-    this.shape.forEach( ( e, i ) => {
+    shape.forEach( ( e, i ) => {
       e.forEach( ( f, j ) => {
         const k = this.x + this.y * WIDTH + trans( j, i );
         if ( this.playfield[ k ] && f ) collision = true;
@@ -101,20 +99,20 @@ class Piece {
   }
 
   moveDown() {
-    while( !this.checkCollision( this.shape ) )
+    while( !this.collision() )
       this.y++;
     this.y--;
   }
 
   moveLeft()  { 
     this.x--;
-    if ( this.checkCollision( this.shape ) )
+    if ( this.collision() )
       this.x++;
   }
 
   moveRight() {
     this.x++;
-    if ( this.checkCollision( this.shape ) )
+    if ( this.collision() )
       this.x--;
   }
 }
