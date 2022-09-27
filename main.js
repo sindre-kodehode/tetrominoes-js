@@ -51,6 +51,10 @@ class Piece {
         this.draw();
         this.reset();
       }
+      if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
+        this.playfield.gameOver();
+        clearInterval( this.interval );
+      }
     }, 200 );
   }
 
@@ -119,7 +123,16 @@ class Piece {
 
 class Playfield extends Array {
   constructor() {
-    super( HEIGHT * WIDTH ).fill( false );
+    super( HEIGHT * WIDTH );
+    this.reset();
+  }
+
+  gameOver() {
+    this.fill( true );
+  }
+
+  reset() {
+    this.fill( false );
 
     for ( let i = 0; i < HEIGHT * WIDTH; i += WIDTH )
       this[ i ] = true;
@@ -191,7 +204,7 @@ const playfield = new Playfield();
 const piece     = new Piece( playfield );
 const buffer    = new Buffer( piece, playfield );
 
-setInterval( () => {
+const gameloop = setInterval( () => {
   buffer.render();
 }, MILLI );
 
