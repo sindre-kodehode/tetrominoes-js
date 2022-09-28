@@ -8,6 +8,26 @@ td {
   border : 1px solid black ;
 }
 
+div {
+  height : 1rem            ;
+  width  : 1rem            ;
+  margin : 2px 0           ;
+  border : 1px solid black ;
+}
+
+.dbg-axis {
+  display: block ;
+}
+
+.dbg-buttons {
+  position: absolute ;
+}
+
+.dbg-axes {
+  position: absolute ;
+  left : 2rem ;
+}
+
 .active {
   background : red ;
 }
