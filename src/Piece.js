@@ -1,4 +1,4 @@
-import { SHAPES, WIDTH } from "./consts.js"
+import { LEVELS, SHAPES, SPEEDS, WIDTH } from "./consts.js"
 
 const trans = ( x, y ) => y * WIDTH + x;
 
@@ -6,24 +6,27 @@ export default class {
   constructor( playfield, scoreboard ) {
     this.playfield  = playfield;
     this.scoreboard = scoreboard;
-    this.shape      = [];
-    this.next       = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
+
+    this.lines = 0;
+    this.level = 0;
+    this.shape = [];
+
+    this.next     = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
+    this.interval = setInterval( () => this.loop(), SPEEDS[ this.level ] );
 
     this.reset();
+  }
 
-    this.interval = setInterval( () => {
-      this.y++;
-      if ( this.collision() ) {
-        this.y--;
-        this.draw();
-        this.reset();
-      }
-      if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
-        this.playfield.gameOver();
-        clearInterval( this.interval );
-        // clearInterval( gameloop );
-      }
-    }, 200 );
+  loop() {
+    this.y++;
+
+    if ( this.collision() )
+      this.reset();
+
+    if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
+      this.playfield.gameOver();
+      clearInterval( this.interval );
+    }
   }
 
   rotate() {
@@ -42,11 +45,28 @@ export default class {
   }
 
   reset() {
-    this.x     = 4;
-    this.y     = 0;
+    this.y--;
+    this.draw();
+
+    this.x = 4;
+    this.y = 0;
+
     this.shape = this.next;
     this.next  = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
-    this.scoreboard.update( this.playfield.checkLines(), this.next );
+
+    const newLines = this.playfield.checkLines();
+
+    this.scoreboard.update( newLines, this.next );
+    this.lines += newLines;
+
+    if ( this.lines >= LEVELS[ this.level ] ) {
+      this.level++;
+      this.lines = 0;
+      console.log( "level: ",this.level );
+    }
+
+    clearInterval( this.interval );
+    this.interval = setInterval( () => this.loop(), SPEEDS[ this.level ]);
   }
 
   draw() {
@@ -72,20 +92,17 @@ export default class {
   }
 
   moveDown() {
-    while( !this.collision() )
-      this.y++;
-    this.y--;
+    while( !this.collision() ) this.y++;
+    this.reset();
   }
 
   moveLeft()  { 
     this.x--;
-    if ( this.collision() )
-      this.x++;
+    if ( this.collision() ) this.x++;
   }
 
   moveRight() {
     this.x++;
-    if ( this.collision() )
-      this.x--;
+    if ( this.collision() ) this.x--;
   }
 }
