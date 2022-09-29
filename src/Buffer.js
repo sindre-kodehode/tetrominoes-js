@@ -1,11 +1,25 @@
 import { HEIGHT, WIDTH } from "./consts.js";
 
 export default class extends Array {
-  constructor( piece, playfield, cells ) {
+  constructor( piece, playfield ) {
     super( HEIGHT * WIDTH ).fill( false );
+
+    this.cells = Array( HEIGHT * WIDTH ).fill().map( () =>
+        document.createElement( "td" ) );
+
+    this.rows = Array( HEIGHT ).fill().map( () =>
+      document.createElement( "tr" ) );
+
+    this.rows.forEach( ( row, i ) => row.append(
+      ...this.cells.slice( i * WIDTH, i * WIDTH + WIDTH ) ) );
+
+    this.table = document.createElement( "table" );
+
+    this.table.append( ...this.rows );
+    document.body.append( this.table );
+
     this.piece     = piece;
     this.playfield = playfield;
-    this.cells     = cells;
   }
 
   render() {
