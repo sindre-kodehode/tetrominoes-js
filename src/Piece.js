@@ -6,6 +6,8 @@ export default class {
   constructor( playfield, scoreboard ) {
     this.playfield  = playfield;
     this.scoreboard = scoreboard;
+    this.shape      = [];
+    this.next       = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
 
     this.reset();
 
@@ -42,8 +44,9 @@ export default class {
   reset() {
     this.x     = 4;
     this.y     = 0;
-    this.shape = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
-    this.scoreboard.update( this.playfield.checkLines() );
+    this.shape = this.next;
+    this.next  = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
+    this.scoreboard.update( this.playfield.checkLines(), this.next );
   }
 
   draw() {

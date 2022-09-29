@@ -20,12 +20,12 @@ div {
   border : 1px solid black ;
 }
 
-#score, #lines, .dbg-axis {
-  display: block ;
+label {
+  margin-top : 1rem ;
 }
 
-#score {
-  margin-bottom : 1rem ;
+#score, #lines, .dbg-axis {
+  display : block ;
 }
 
 .scoreboard, .dbg-buttons, .dbg-axes {
