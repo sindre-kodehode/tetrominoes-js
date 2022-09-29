@@ -24,11 +24,16 @@ export default class extends Array {
   }
 
   checkLines() {
+    let numLines = 0;
+
     for ( let i = 0; i < HEIGHT * WIDTH - WIDTH; i += WIDTH ) {
       if ( this.slice( i + 1, i + WIDTH - 1 ).every( e => e ) ) {
         this.deleteLine( i );
+        numLines++;
       }
     }
+
+    return numLines;
   }
 
   deleteLine( n ) {

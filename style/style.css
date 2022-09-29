@@ -1,3 +1,8 @@
+body {
+  font-family : "Press Start 2P", cursive ;
+  font-size   : 1rem                      ;
+}
+
 table {
   margin : 1rem auto ;
 }
@@ -15,16 +20,19 @@ div {
   border : 1px solid black ;
 }
 
-.dbg-axis {
+#score, #lines, .dbg-axis {
   display: block ;
 }
 
-.dbg-buttons {
+#score {
+  margin-bottom : 1rem ;
+}
+
+.scoreboard, .dbg-buttons, .dbg-axes {
   position: absolute ;
 }
 
 .dbg-axes {
-  position: absolute ;
   left : 2rem ;
 }
 

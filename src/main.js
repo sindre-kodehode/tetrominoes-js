@@ -1,14 +1,14 @@
 import Buffer     from "./Buffer.js";
+import Controller from "./Controller.js";
 import Piece      from "./Piece.js";
 import Playfield  from "./Playfield.js";
-import Controller from "./Controller.js";
+import Scoreboard from "./Scoreboard.js"
 
 import { 
   HEIGHT,  
   MILLI,
   WIDTH, 
 } from "./consts.js";
-
 
 const cells = Array( HEIGHT * WIDTH ).fill().map( () =>
     document.createElement( "td" ) );
@@ -25,7 +25,8 @@ table.append( ...rows );
 document.body.append( table );
 
 const playfield  = new Playfield();
-const piece      = new Piece( playfield );
+const scoreboard = new Scoreboard();
+const piece      = new Piece( playfield, scoreboard );
 const buffer     = new Buffer( piece, playfield, cells );
 const controller = new Controller( piece );
 

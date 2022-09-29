@@ -2,20 +2,32 @@
 <html lang="en">
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"> 
+
   <link rel="icon" type="image/x-icon" href="./asset/favicon.ico">
-  <link href="./style/style.css" rel="stylesheet" />
 
   <title> Tetraminoes </title>
 
 </head>
 <body>
 
-    <script type="module" src="./src/main.js"></script>
+    <section class="scoreboard">
+      <label for="score"> score </label>
+      <output id="score"></output>
+      <label for="lines"> lines </label>
+      <output id="lines"></output>
+    </section>
+
     <article class="debug"></article>
+    <script type="module" src="./src/main.js"></script>
 
 </body>
 </html>

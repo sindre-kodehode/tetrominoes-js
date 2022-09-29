@@ -3,10 +3,13 @@ import { SHAPES, WIDTH } from "./consts.js"
 const trans = ( x, y ) => y * WIDTH + x;
 
 export default class {
-  constructor( playfield ) {
-    this.playfield = playfield;
+  constructor( playfield, scoreboard ) {
+    this.playfield  = playfield;
+    this.scoreboard = scoreboard;
+
     this.reset();
-    this.interval  = setInterval( () => {
+
+    this.interval = setInterval( () => {
       this.y++;
       if ( this.collision() ) {
         this.y--;
@@ -40,7 +43,7 @@ export default class {
     this.x     = 4;
     this.y     = 0;
     this.shape = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
-    this.playfield.checkLines();
+    this.scoreboard.update( this.playfield.checkLines() );
   }
 
   draw() {
