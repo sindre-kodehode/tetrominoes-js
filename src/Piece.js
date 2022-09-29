@@ -55,15 +55,14 @@ export default class {
     this.next  = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
 
     const newLines = this.playfield.checkLines();
-
-    this.scoreboard.update( newLines, this.next );
     this.lines += newLines;
 
     if ( this.lines >= LEVELS[ this.level ] ) {
       this.level++;
       this.lines = 0;
-      console.log( "level: ",this.level );
     }
+
+    this.scoreboard.update( newLines, this.next, this.level );
 
     clearInterval( this.interval );
     this.interval = setInterval( () => this.loop(), SPEEDS[ this.level ]);

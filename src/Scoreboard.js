@@ -9,6 +9,7 @@ export default class {
     this.scoreEl   = document.querySelector( "#score"   );
     this.linesEl   = document.querySelector( "#lines"   );
     this.previewEl = document.querySelector( "#preview" );
+    this.levelEl   = document.querySelector( "#level"   );
 
     this.rowsEl = Array( 4 ).fill().map( () =>
       document.createElement( "tr" )
@@ -24,7 +25,7 @@ export default class {
     this.update( 0, 0 );
   }
 
-  update( lines, shape ) {
+  update( lines, shape, level ) {
     this.lines += lines;
     this.score += SCORES[ lines ];
     this.shape  = shape;
@@ -39,6 +40,7 @@ export default class {
           = this.shape[ i ][ j ] ? "active" : "";
 
     this.linesEl.textContent = this.lines;
+    this.levelEl.textContent = level;
     this.scoreEl.textContent = this.score;
   }
 }
