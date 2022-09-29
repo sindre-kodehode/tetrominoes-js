@@ -20,8 +20,7 @@ export default class extends Array {
       })
     })
 
-    this.forEach( ( _, i ) =>
+    for ( let i = 0; i < this.cells.length; i++ )
       this.cells[ i ].className = this[ i ] ? "active" : ""
-    )
   }
 }
