@@ -4,6 +4,9 @@ export default class extends Array {
   constructor( piece, playfield ) {
     super( HEIGHT * WIDTH ).fill( false );
 
+    this.piece     = piece;
+    this.playfield = playfield;
+
     this.cells = Array( HEIGHT * WIDTH ).fill().map( () =>
         document.createElement( "td" ) );
 
@@ -13,13 +16,8 @@ export default class extends Array {
     this.rows.forEach( ( row, i ) => row.append(
       ...this.cells.slice( i * WIDTH, i * WIDTH + WIDTH ) ) );
 
-    this.table = document.createElement( "table" );
-
+    this.table = document.querySelector( "#display" );
     this.table.append( ...this.rows );
-    document.body.append( this.table );
-
-    this.piece     = piece;
-    this.playfield = playfield;
   }
 
   render() {

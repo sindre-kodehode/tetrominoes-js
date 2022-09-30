@@ -39,8 +39,8 @@ export default class {
         this.rowsEl[ i ].children[ j ].className
           = this.shape[ i ][ j ] ? "active" : "";
 
-    this.linesEl.textContent = this.lines;
-    this.levelEl.textContent = level;
-    this.scoreEl.textContent = this.score;
+    this.scoreEl.textContent = `${ this.score }`.padStart( 6, "0" );
+    this.linesEl.textContent = `${ this.lines }`.padStart( 3, "0" );
+    this.levelEl.textContent = `${ level }`.padStart( 2, "0" );
   }
 }
