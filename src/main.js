@@ -1,5 +1,6 @@
 import Buffer     from "./Buffer.js";
 import Controller from "./Controller.js";
+import HiScores   from "./HiScores.js"
 import Piece      from "./Piece.js";
 import Playfield  from "./Playfield.js";
 import Scoreboard from "./Scoreboard.js"
@@ -7,7 +8,8 @@ import Scoreboard from "./Scoreboard.js"
 import { MILLI } from "./consts.js";
 
 const playfield  = new Playfield();
-const scoreboard = new Scoreboard();
+const hiscores   = new HiScores();
+const scoreboard = new Scoreboard( hiscores );
 const piece      = new Piece( playfield, scoreboard );
 const buffer     = new Buffer( piece, playfield );
 const controller = new Controller( piece );
