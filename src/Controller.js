@@ -60,8 +60,17 @@ export default class {
     if ( this.axes[6] === 2 && this.axsCache[6] !== 2 )
       this.piece.moveRight();
 
-    if ( this.axes[7] === 2 && this.axsCache[7] !== 2 )
-      this.piece.moveDown();
+    if ( this.axes[7] === 2 && this.axsCache[7] !== 2 ) {
+      this.piece.loop();
+      this.piece.startSoftDrop();
+    }
+
+    if ( this.axes[7] !== 2 && this.axsCache[7] === 2 ) {
+      this.piece.stopSoftDrop();
+    }
+
+    if ( this.axes[7] === 0 && this.axsCache[7] !== 0 )
+      this.piece.hardDrop();
 
     if ( this.buttons[0] && !this.btnCache[0] )
       this.piece.rotate();

@@ -91,7 +91,18 @@ export default class {
     return collision;
   }
 
-  moveDown() {
+  startSoftDrop() {
+    clearInterval( this.interval );
+    const newSpeed = Math.max( SPEEDS[ this.level ] / 10, SPEEDS[ SPEEDS.length - 1 ] );
+    this.interval = setInterval( () => this.loop(), newSpeed );
+  }
+
+  stopSoftDrop() {
+    clearInterval( this.interval );
+    this.interval = setInterval( () => this.loop(), SPEEDS[ this.level ] );
+  }
+
+  hardDrop() {
     while( !this.collision() ) this.y++;
     this.reset();
   }

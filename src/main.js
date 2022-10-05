@@ -20,14 +20,25 @@ setInterval( () => {
   controller.buttonPress();
 }, MILLI );
 
-document.addEventListener( "keydown", ({ key }) => {
+document.addEventListener( "keydown", ({ key, repeat }) => {
   switch( key ) {
     case "ArrowLeft"  : piece.moveLeft()         ; break ;
     case "ArrowRight" : piece.moveRight()        ; break ;
-    case "ArrowDown"  : piece.moveDown()         ; break ;
     case "ArrowUp"    : piece.rotate()           ; break ;
     case "d"          : controller.toggleDebug() ; break ;
+    case " "          : piece.hardDrop();        ; break ;
+    case "ArrowDown"  : {
+      if ( !repeat ) {
+        piece.loop();
+        piece.startSoftDrop();
+      }
+      break ;
+    }
 }});
+
+document.addEventListener( "keyup", ({ key }) => {
+  switch( key ) { case "ArrowDown" : piece.stopSoftDrop() }
+});
 
 window.addEventListener( "gamepadconnected", e =>
   controller.connect( e )
