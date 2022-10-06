@@ -1,17 +1,18 @@
 import { SCORES } from "./consts.js";
 
 export default class {
-  constructor( hiscores ) {
+  constructor( hiscores, name ) {
     this.hiscores = hiscores;
-    this.score   = 0;
-    this.lines   = 0;
-    this.shape   = [];
+    this.name     = name;
+    this.score    = 0;
+    this.lines    = 0;
+    this.shape    = [];
 
     this.previewEl = document.querySelector( "#preview" );
-    this.hiscoreEl = document.querySelector( "#hiscore" );
     this.scoreEl   = document.querySelector( "#score"   );
     this.linesEl   = document.querySelector( "#lines"   );
     this.levelEl   = document.querySelector( "#level"   );
+    this.nameEl    = document.querySelector( "#name"    );
 
     this.rowsEl = Array( 4 ).fill().map( () =>
       document.createElement( "tr" )
@@ -23,6 +24,7 @@ export default class {
     )));
 
     this.previewEl.append( ...this.rowsEl );
+    this.nameEl.textContent = this.name;
 
     this.update( this.lines, this.shape );
   }
@@ -41,17 +43,12 @@ export default class {
         this.rowsEl[ i ].children[ j ].className
           = this.shape[ i ][ j ] ? "active" : "";
 
-    this.hiscoreEl.textContent = `${ this.hiscores.top }`.padStart( 6, "0" );
     this.scoreEl.textContent   = `${ this.score }`.padStart( 6, "0" );
     this.linesEl.textContent   = `${ this.lines }`.padStart( 3, "0" );
     this.levelEl.textContent   = `${ level }`.padStart( 2, "0" );
   }
 
   gameOver() {
-    if ( this.score > this.hiscores.top ) {
-      this.hiscoreEl.textContent = `${ this.score }`.padStart( 6, "0" );
-    }
-
-    this.hiscores.insertHiScore( "SIN", this.score );
+    this.hiscores.insertHiScore( this.name, this.score );
   }
 }

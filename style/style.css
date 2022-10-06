@@ -4,13 +4,13 @@
 }
 
 body {
-  display               : grid                 ;
-  font-family           : "Press Start 2P"     ;
-  font-size             : 1rem                 ;
-  gap                   : 1rem                 ;
-  grid-template-columns : auto auto 15rem auto ;
-  justify-content       : center               ;
-  margin                : 2rem auto            ;
+  display               : grid             ;
+  font-family           : "Press Start 2P" ;
+  font-size             : 1rem             ;
+  gap                   : 1rem             ;
+  grid-template-columns : auto 15rem auto  ;
+  justify-content       : center           ;
+  margin                : 2rem auto        ;
 }
 
 td, div {
@@ -23,6 +23,40 @@ div {
   margin : 2px 0 ;
 }
 
+output {
+  justify-self : end ;
+}
+
+#menu {
+  align-content   : start     ;
+  display         : grid      ;
+  height          : 100vh     ;
+  inset           : 0         ;
+  justify-content : center    ;
+  padding         : 4rem 0rem ;
+  position        : absolute  ;
+  width           : 100vw     ;
+}
+
+#menu main {
+  align-items : center            ;
+  background  : white             ;
+  border      : 2px solid black   ;
+  display     : grid              ;
+  grid        : 2rem 2rem / 10rem ;
+  padding     : 1rem              ;
+  width       : 10rem             ;
+}
+
+#menu input {
+  border         : none             ;
+  font-family    : "Press Start 2P" ;
+  font-size      : 1rem             ;
+  outline        : none             ;
+  text-align     : center           ;
+  text-transform : uppercase        ;
+}
+
 #global-hi-scores, #user-hi-scores {
   display : grid ;
   grid    : repeat( 11, 1rem ) / 4rem 6rem ;
@@ -32,10 +66,6 @@ div {
 #scoreboard {
   display : grid ;
   grid : 1rem 2rem 1rem 6rem 1rem 2rem 1rem 2rem 1rem 2rem 1rem 1rem / 6rem;
-}
-
-output {
-  justify-self : end ;
 }
 
 #preview {

@@ -19,12 +19,14 @@
 </head>
 <body>
 
-    <section id="global-hi-scores">
-      <p> NAME  </p>
-      <p> SCORE </p>
+    <section id="menu">
+      <main>
+        <label for="input"> ENTER NAME </label>
+        <input autofocus id="input" type="text" maxlength="3" value="">
+      </main>
     </section>
 
-    <section id="user-hi-scores">
+    <section id="global-hi-scores">
       <p> NAME  </p>
       <p> SCORE </p>
     </section>
@@ -33,13 +35,10 @@
 
     <section id="scoreboard">
       <label for="name"> NAME </label>
-      <output id="name"> SIN </output>
+      <output id="name"> </output>
 
       <label for="preview"> NEXT </label>
       <table id="preview"></table>
-
-      <label for="hiscore"> TOP </label>
-      <output id="hiscore"></output>
 
       <label for="score"> SCORE </label>
       <output id="score"></output>
