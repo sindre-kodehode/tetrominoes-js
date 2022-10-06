@@ -3,10 +3,7 @@ import { LEVELS, SHAPES, SPEEDS, WIDTH } from "./consts.js"
 const trans = ( x, y ) => y * WIDTH + x;
 
 export default class {
-  constructor( playfield, scoreboard ) {
-    this.playfield  = playfield;
-    this.scoreboard = scoreboard;
-
+  constructor() {
     this.lines = 0;
     this.level = 0;
     this.shape = [];

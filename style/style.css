@@ -23,6 +23,10 @@ div {
   margin : 2px 0 ;
 }
 
+#display {
+  border : 2px solid black ;
+}
+
 #global-hi-scores, #user-hi-scores {
   display : grid ;
   grid    : repeat( 11, 1rem ) / 4rem 6rem ;
