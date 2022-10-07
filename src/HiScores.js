@@ -4,7 +4,7 @@ export default class {
     this.fetchGlobalHiScore();
   }
 
-  async insertHiScore( name, score ) {
+  async insertHiScore( name, score, lines, level ) {
     if ( score <= 0 ) return;
 
     try {
@@ -15,7 +15,13 @@ export default class {
       const opt = {
         method  : "POST",
         headers : { "Content-Type" : "application/json" },
-        body    : JSON.stringify({ name : name, score : score }),
+        body    : JSON.stringify(
+          { 
+            name  : name,
+            lines : lines,
+            level : level,
+            score : score
+          }),
       };
 
       await fetch( url, opt );

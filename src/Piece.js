@@ -25,7 +25,7 @@ export default class {
 
     if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
       this.playfield.gameOver();
-      this.scoreboard.gameOver();
+      this.scoreboard.gameOver( this.level );
       clearInterval( this.interval );
     }
   }

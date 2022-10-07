@@ -48,7 +48,7 @@ export default class {
     this.levelEl.textContent   = `${ level }`.padStart( 2, "0" );
   }
 
-  gameOver() {
-    this.hiscores.insertHiScore( this.name, this.score );
+  gameOver( level ) {
+    this.hiscores.insertHiScore( this.name, this.score, this.lines, level );
   }
 }
