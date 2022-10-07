@@ -5,7 +5,7 @@ export default class {
   }
 
   async insertHiScore( name, score, lines, level ) {
-    if ( score <= 0 ) return;
+    if ( score <= 0 || !score ) return;
 
     try {
       const url = "https://data.mongodb-api.com"
