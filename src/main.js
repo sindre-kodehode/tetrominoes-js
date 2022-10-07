@@ -11,13 +11,14 @@ const menuEl = document.querySelector( "#menu" );
 const nameEl = document.querySelector( "#menu input" );
 nameEl.value = "";
 
+const playfield = new Playfield();
+const hiscores  = new HiScores();
+
 nameEl.addEventListener( "keydown", ({ key }) => {
   if ( key === "Enter" ) {
     menuEl.style.display = "none";
     const name = nameEl.value.toUpperCase();
 
-    const playfield  = new Playfield();
-    const hiscores   = new HiScores();
     const scoreboard = new Scoreboard( hiscores, name );
     const piece      = new Piece( playfield, scoreboard );
     const buffer     = new Buffer( piece, playfield );
@@ -30,6 +31,8 @@ nameEl.addEventListener( "keydown", ({ key }) => {
     }, MILLI );
 
     document.addEventListener( "keydown", ({ key, repeat }) => {
+      if ( piece.gameOver ) return;
+
       switch( key ) {
         case "ArrowLeft"  : piece.moveLeft()         ; break ;
         case "ArrowRight" : piece.moveRight()        ; break ;
@@ -46,6 +49,8 @@ nameEl.addEventListener( "keydown", ({ key }) => {
     }});
 
     document.addEventListener( "keyup", ({ key }) => {
+      if ( piece.gameOver ) return;
+
       switch( key ) { case "ArrowDown" : piece.stopSoftDrop() }
     });
 

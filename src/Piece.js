@@ -6,6 +6,7 @@ export default class {
   constructor( playfield, scoreboard ) {
     this.playfield  = playfield;
     this.scoreboard = scoreboard;
+    this.gameOver   = false;
 
     this.lines = 0;
     this.level = 0;
@@ -24,6 +25,7 @@ export default class {
       this.reset();
 
     if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
+      this.gameOver = true;
       this.playfield.gameOver();
       this.scoreboard.gameOver( this.level );
       clearInterval( this.interval );
