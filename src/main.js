@@ -3,7 +3,8 @@ import Controller from "./Controller.js";
 import HiScores   from "./HiScores.js"
 import Piece      from "./Piece.js";
 import Playfield  from "./Playfield.js";
-import Scoreboard from "./Scoreboard.js"
+import Scoreboard from "./Scoreboard.js";
+import {Play} from "./Audio.js";
 
 import { MILLI } from "./consts.js";
 
@@ -11,18 +12,20 @@ const menuEl = document.querySelector( "#menu" );
 const nameEl = document.querySelector( "#menu input" );
 nameEl.value = "";
 
-const playfield = new Playfield();
-const hiscores  = new HiScores();
+
+window.playfield = new Playfield();
+window.hiscores  = new HiScores();
 
 nameEl.addEventListener( "keydown", ({ key }) => {
   if ( key === "Enter" ) {
     menuEl.style.display = "none";
     const name = nameEl.value.toUpperCase();
 
-    const scoreboard = new Scoreboard( hiscores, name );
-    const piece      = new Piece( playfield, scoreboard );
-    const buffer     = new Buffer( piece, playfield );
-    const controller = new Controller( piece );
+    Play();
+    window.scoreboard = new Scoreboard( hiscores, name );
+    window.piece      = new Piece( playfield, scoreboard );
+    window.buffer     = new Buffer( piece, playfield );
+    window.controller = new Controller( piece );
 
     setInterval( () => {
       buffer.render();
