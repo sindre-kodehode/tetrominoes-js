@@ -1,4 +1,5 @@
 import { LEVELS, SHAPES, SPEEDS, WIDTH } from "./consts.js"
+import {Stop, PlayDeathSound} from "./Audio.js"
 
 const trans = ( x, y ) => y * WIDTH + x;
 
@@ -13,7 +14,9 @@ export default class {
     this.shape = [];
 
     this.next     = SHAPES[ Math.floor( Math.random() * SHAPES.length ) ];
-    this.interval = setInterval( () => this.loop(), SPEEDS[ this.level ] );
+    this.interval = setInterval( () => {
+       (!this.gameOver) && this.loop(), SPEEDS[ this.level ] 
+    });
 
     this.reset();
   }
@@ -26,6 +29,10 @@ export default class {
 
     if ( !this.playfield.slice( 1, WIDTH - 1 ).every( e => !e ) ) {
       this.gameOver = true;
+
+      Stop();
+      PlayDeathSound();
+
       this.playfield.gameOver();
       this.scoreboard.gameOver( this.level );
       clearInterval( this.interval );
