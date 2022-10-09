@@ -1,4 +1,4 @@
-import { COLORS, HEIGHT, SHAPES, WIDTH } from "./consts.js";
+import { COLORS, SHAPES } from "./consts.js";
 
 const BLOCKSIZE = 16;
 
@@ -6,7 +6,7 @@ export default class Piece {
   constructor( game ) {
     this.game         = game;
     this.shape        = 0;
-    this.x            = 0;
+    this.x            = 3 * BLOCKSIZE;
     this.y            = -BLOCKSIZE;
     this.speed        = 16;
     this.dropTimer    = 0;
@@ -14,8 +14,7 @@ export default class Piece {
   }
 
   changeShape() {
-    this.shape++;
-    if ( this.shape >= SHAPES.length ) this.shape = 0;
+    this.shape = ++this.shape % SHAPES.length;
   }
 
   draw( context ) {
@@ -40,18 +39,35 @@ export default class Piece {
       this.changeShape();
     }
 
-    if ( this.game.keys.includes( "ArrowDown" ) )
-      this.dropInterval = 200;
-    else
-      this.dropInterval = 500;
-
-    if ( this.dropTimer < this.dropInterval ) {
-      this.dropTimer += deltaTime;
-      return;
+    if ( this.game.keys.includes( "ArrowLeft" ) ) {
+      this.game.keys = this.game.keys.filter( k => k !== "ArrowLeft" );
+      this.x -= BLOCKSIZE;
     }
 
-    this.dropTimer = 0;
-    this.y += BLOCKSIZE;
+    if ( this.game.keys.includes( "ArrowRight" ) ) {
+      this.game.keys = this.game.keys.filter( k => k !== "ArrowRight" );
+      this.x += BLOCKSIZE;
+    }
+
+    this.x = Math.max( 0, this.x );
+    this.x = Math.min( this.game.width - SHAPES[ this.shape ].length * BLOCKSIZE, this.x );
+
+    if ( this.game.smooth ) {
+      this.y += this.game.keys.includes( "ArrowDown" ) ? 2 : 1;
+    }
+
+    else {
+      this.dropInterval = this.game.keys.includes( "ArrowDown" ) ? 200 : 500;
+
+      if ( this.dropTimer < this.dropInterval ) {
+        this.dropTimer += deltaTime;
+        return;
+      }
+
+      this.dropTimer = 0;
+      this.y += BLOCKSIZE;
+    }
+
     if ( this.y > this.game.height ) this.y = -2 * BLOCKSIZE;
   }
 }

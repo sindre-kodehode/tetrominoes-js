@@ -7,6 +7,7 @@ export default class {
       "ArrowRight",
       "ArrowUp",
       "Enter",
+      "s",
       "p",
     ];
     

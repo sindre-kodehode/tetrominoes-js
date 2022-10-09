@@ -6,8 +6,10 @@ export default class {
     this.width  = width;
     this.height = height;
 
-    this.paused    = false;
-    this.keys      = [];
+    this.smooth = false;
+    this.paused = false;
+
+    this.keys   = [];
 
     this.inputHandler = new InputHandler( this );
     this.piece        = new Piece( this );
@@ -26,6 +28,11 @@ export default class {
     if ( this.keys.includes( "p" ) ) {
       this.keys = this.keys.filter( k => k !== "p" );
       this.paused = !this.paused;
+    }
+
+    if ( this.keys.includes( "s" ) ) {
+      this.keys = this.keys.filter( k => k !== "s" );
+      this.smooth = !this.smooth;
     }
 
     this.piece.update( deltaTime );
