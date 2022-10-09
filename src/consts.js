@@ -1,8 +1,9 @@
-const FPS    = 60;
-const MILLI  = 1000 / FPS;
+const FPS   = 60;
+const MILLI = 1000 / FPS;
 
-const HEIGHT = 320;
-const WIDTH  = 160;
+const BLOCKSIZE = 16;
+const HEIGHT    = 320;
+const WIDTH     = 160;
 
 const SCORES = [ 0, 40, 100, 300, 1200 ];
 
@@ -74,6 +75,7 @@ const SHAPES = [
 ]
 
 export {
+  BLOCKSIZE,
   COLORS,
   HEIGHT,
   LEVELS,
