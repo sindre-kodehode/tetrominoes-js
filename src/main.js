@@ -9,13 +9,13 @@ const game    = new Game( WIDTH, HEIGHT );
 display.height = HEIGHT;
 display.width  = WIDTH;
 
-let prevTime = 0;
+let prevTime  = 0;
+let deltaTime = 0;
 
 const loop = curTime => {
   requestAnimationFrame( loop );
 
-  const deltaTime = curTime - prevTime;
-  prevTime = curTime;
+  [ deltaTime, prevTime ] = [ curTime - prevTime, curTime ];
 
   game.update( deltaTime );
   game.draw( context );

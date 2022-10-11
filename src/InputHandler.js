@@ -1,26 +1,40 @@
 export default class {
   constructor( game ) {
-    this.game = game;
-    this.registeredKeys = [ 
-      "ArrowDown",
-      "ArrowLeft",
-      "ArrowRight",
-      "ArrowUp",
-      "Enter",
-      "s",
-      "p",
-    ];
-    
+    this.game             = game;
+    this.registeredKeys   = [];
+    this.pressedKeys      = [];
+    this.pressedKeysCache = [];
+
     document.addEventListener( "keydown", ({ key, repeat }) => {
       if ( repeat ) return;
 
-      if ( this.registeredKeys.includes( key ) )
-        this.game.keys.push( key );
+      this.registeredKeys.forEach( k => {
+        if( k.key === key ) k.pressed = true;
+      });
     });
 
     document.addEventListener( "keyup", ({ key }) => {
-      if ( this.registeredKeys.includes( key ) )
-        this.game.keys = this.game.keys.filter( k => k !== key );
+      this.registeredKeys.forEach( k => {
+        if( k.key === key ) k.pressed = false;
+      });
+    });
+  }
+
+  assignKey( key, callback ) {
+    this.registeredKeys.push({ key: key, callback : callback, pressed : false });
+  }
+
+  unassignAll() {
+    this.registeredKeys = [];
+  }
+
+  update() {
+    this.pressedKeysCache = [ ...this.pressedKeys ];
+    this.pressedKeys      = this.registeredKeys.map( k => k.pressed );
+
+    this.registeredKeys.forEach( ( k, i ) => {
+      if ( this.pressedKeys[ i ] && !this.pressedKeysCache[ i ] )
+        k.callback();
     });
   }
 }
