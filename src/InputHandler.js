@@ -20,8 +20,13 @@ export default class {
     });
   }
 
-  assignKey( key, callback ) {
-    this.registeredKeys.push({ key: key, callback : callback, pressed : false });
+  assignKey( key, keydown, keyup ) {
+    this.registeredKeys.push({
+      keydown : keydown,
+      key     : key,
+      keyup   : keyup,
+      pressed : false,
+    });
   }
 
   unassignAll() {
@@ -34,7 +39,12 @@ export default class {
 
     this.registeredKeys.forEach( ( k, i ) => {
       if ( this.pressedKeys[ i ] && !this.pressedKeysCache[ i ] )
-        k.callback();
+        k.keydown && k.keydown();
+    });
+
+    this.registeredKeys.forEach( ( k, i ) => {
+      if ( !this.pressedKeys[ i ] && this.pressedKeysCache[ i ] )
+        k.keyup && k.keyup();
     });
   }
 }

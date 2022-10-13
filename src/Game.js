@@ -1,16 +1,18 @@
 import InputHandler from "./InputHandler.js";
 import Piece        from "./Piece.js";
+import Playfield    from "./Playfield.js";
 
 export default class {
   constructor( width, height ) {
-    this.width  = width;
-    this.height = height;
-    this.smooth = false;
-    this.paused = false;
-    this.keys   = [];
+    this.width    = width;
+    this.height   = height;
+    this.smooth   = false;
+    this.isPaused = false;
+    this.keys     = [];
 
     this.inputHandler = new InputHandler( this );
-    this.piece        = new Piece( this, this.inputHandler );
+    this.playfield    = new Playfield( this );
+    this.piece        = new Piece( this, this.inputHandler, this.playfield );
 
     this.assignKeys();
   }
@@ -20,16 +22,20 @@ export default class {
   }
 
   pauseGame()  { 
-    this.paused = !this.paused;
+    this.isPaused = !this.isPaused;
     this.inputHandler.unassignAll();
     this.assignKeys();
 
-    if ( this.paused ) return;
+    if ( this.isPaused )
+      return;
+
     this.piece.assingKeys();
   }
 
   draw( context ) {
-    if ( this.paused ) return;
+    if ( this.isPaused )
+      return;
+
     context.clearRect( 0, 0, this.width, this.height );
     this.piece.draw( context );
   }
@@ -37,7 +43,9 @@ export default class {
   update( deltaTime ) {
     this.inputHandler.update( deltaTime );
 
-    if ( this.paused ) return;
+    if ( this.isPaused )
+      return;
+
     this.piece.update( deltaTime );
   }
 }

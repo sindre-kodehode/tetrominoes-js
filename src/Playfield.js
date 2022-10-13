@@ -1,46 +1,21 @@
-import { HEIGHT, WIDTH } from "./consts.js";
+import { BLOCKSIZE } from "./consts.js";
 
 export default class extends Array {
-  constructor() {
-    super( HEIGHT * WIDTH );
+  constructor( game ) {
+    super( game.height / BLOCKSIZE );
+    this.game = game;
     this.reset();
   }
 
-  gameOver() {
-    this.fill( true );
-  }
+  gameOver() { }
 
-  reset() {
-    this.fill( false );
+  reset() { }
 
-    for ( let i = 0; i < HEIGHT * WIDTH; i += WIDTH )
-      this[ i ] = true;
+  checkLines() { }
 
-    for ( let i = WIDTH - 1; i < HEIGHT * WIDTH; i += WIDTH )
-      this[ i ] = true;
+  deleteLine() { }
 
-    for ( let i = WIDTH * HEIGHT - WIDTH; i < HEIGHT * WIDTH; i++ )
-      this[ i ] = true;
-  }
+  update() { }
 
-  checkLines() {
-    let numLines = 0;
-
-    for ( let i = 0; i < HEIGHT * WIDTH - WIDTH; i += WIDTH ) {
-      if ( this.slice( i + 1, i + WIDTH - 1 ).every( e => e ) ) {
-        this.deleteLine( i );
-        numLines++;
-      }
-    }
-
-    return numLines;
-  }
-
-  deleteLine( n ) {
-    for ( let i = n; i > 0; i -= WIDTH ) {
-      for ( let j = i; j < i + WIDTH - 1; j++ ) {
-        this[ j ] = this[ j - WIDTH ];
-      }
-    }
-  }
+  draw() { }
 }

@@ -20,9 +20,13 @@ export default class Piece {
   assingKeys() {
     this.inputHandler.assignKey( "Enter",      () => this.changeShape()  );
     this.inputHandler.assignKey( "s",          () => this.toggleSmooth() );
-    this.inputHandler.assignKey( "ArrowDown",  () => this.toggleDrop()   );
     this.inputHandler.assignKey( "ArrowLeft",  () => this.moveLeft()     );
     this.inputHandler.assignKey( "ArrowRight", () => this.moveRight()    );
+    this.inputHandler.assignKey( 
+      "ArrowDown",
+      () => this.toggleDrop(),
+      () => this.toggleDrop(),
+    );
   }
 
   draw( context ) {
@@ -49,19 +53,16 @@ export default class Piece {
     this.x = Math.max( 0, this.x );
     this.x = Math.min( this.game.width - SHAPES[ this.shape ].length * BLOCKSIZE, this.x );
 
-    if ( this.smooth ) this.y += this.drop ? 2 : 1;
-    else {
-      this.dropInterval = this.drop ? 200 : 500;
+    this.dropInterval = this.smooth ? 100 : 1600;
+    this.dropTimer += deltaTime;
 
-      if ( this.dropTimer < this.dropInterval ) {
-        this.dropTimer += deltaTime;
-        return;
-      }
+    if ( this.dropTimer < this.dropInterval ) return;
 
-      this.dropTimer = 0;
-      this.y += BLOCKSIZE;
+    while ( this.dropTimer > this.dropInterval ) {
+      this.dropTimer = this.dropTimer - this.dropInterval;
+      this.y += this.smooth ? 1 : BLOCKSIZE;
     }
 
-    if ( this.y > this.game.height ) this.y = -2 * BLOCKSIZE;
+    if ( this.y >= this.game.height ) this.y = -2 * BLOCKSIZE;
   }
 }
