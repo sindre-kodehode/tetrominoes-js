@@ -10,14 +10,25 @@ export default class {
   gameOver() { }
 
   reset() {
-    this.playfield.fill( new Array( this.game.width / BLOCKSIZE ).fill( 0 ) );
+    this.playfield = this.playfield.map( () =>
+      new Array( this.game.width / BLOCKSIZE ).fill( 0 )
+    );
   }
 
   checkLines() { }
 
   deleteLine() { }
 
-  update() { }
+  update( shape, x, y ) {
+    shape.forEach( ( row, i ) => row.forEach( ( block, j ) => {
+      if ( block ) {
+        const yIdx  = ( y / BLOCKSIZE ) + i;
+        const xIdx  = ( x / BLOCKSIZE ) + j;
+
+        this.playfield[ yIdx ][ xIdx ] = block;
+      }
+    }));
+  }
 
   draw( context ) {
     this.playfield.forEach( ( row, i ) => row.forEach( ( block, j ) => {

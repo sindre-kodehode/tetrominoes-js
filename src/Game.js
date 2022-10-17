@@ -48,6 +48,5 @@ export default class {
       return;
 
     this.piece.update( deltaTime );
-    this.playfield.update( deltaTime );
   }
 }

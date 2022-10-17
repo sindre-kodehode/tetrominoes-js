@@ -1,9 +1,10 @@
 import { BLOCKSIZE, COLORS, SHAPES } from "./consts.js";
 
 export default class Piece {
-  constructor( game, inputHandler ) {
+  constructor( game, inputHandler, playfield ) {
     this.game         = game;
     this.inputHandler = inputHandler;
+    this.playfield    = playfield;
 
     this.shape        = 0;
     this.x            = 3 * BLOCKSIZE;
@@ -29,6 +30,12 @@ export default class Piece {
     );
   }
 
+  changeShape()  { this.shape = ++this.shape % SHAPES.length; }
+  toggleDrop()   { this.drop = !this.drop;                    }
+  toggleSmooth() { this.smooth = !this.smooth;                }
+  moveLeft()     { this.x -= BLOCKSIZE;                       }
+  moveRight()    { this.x += BLOCKSIZE;                       }
+
   draw( context ) {
     SHAPES[ this.shape ].forEach( ( row, i ) => row.forEach( ( block, j ) => {
       if ( block ) {
@@ -43,12 +50,6 @@ export default class Piece {
       }
     })
   )}
-
-  changeShape()  { this.shape = ++this.shape % SHAPES.length; }
-  toggleDrop()   { this.drop = !this.drop;                    }
-  toggleSmooth() { this.smooth = !this.smooth;                }
-  moveLeft()     { this.x -= BLOCKSIZE;                       }
-  moveRight()    { this.x += BLOCKSIZE;                       }
 
   update( deltaTime ) {
     const minX = 0;
@@ -67,6 +68,6 @@ export default class Piece {
       this.y += this.smooth ? 1 : BLOCKSIZE;
     }
 
-    if ( this.y >= this.game.height ) this.y = -2 * BLOCKSIZE;
+    if ( this.y - SHAPES[ this.shape ] >= this.game.height ) this.y = -2 * BLOCKSIZE;
   }
 }
