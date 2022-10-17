@@ -38,6 +38,7 @@ export default class {
 
     context.clearRect( 0, 0, this.width, this.height );
     this.piece.draw( context );
+    this.playfield.draw( context );
   }
 
   update( deltaTime ) {
@@ -47,5 +48,6 @@ export default class {
       return;
 
     this.piece.update( deltaTime );
+    this.playfield.update( deltaTime );
   }
 }

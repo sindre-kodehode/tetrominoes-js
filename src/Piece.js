@@ -30,15 +30,16 @@ export default class Piece {
   }
 
   draw( context ) {
-    SHAPES[ this.shape ].forEach( ( e, i ) => e.forEach( ( f, j ) => {
-      if ( f ) {
-        context.fillStyle = COLORS[ f ];
-        context.fillRect( 
-          this.x + ( j * BLOCKSIZE ) + 1,
-          this.y + ( i * BLOCKSIZE ) + 1,
-          BLOCKSIZE - 2,
-          BLOCKSIZE - 2,
-        );
+    SHAPES[ this.shape ].forEach( ( row, i ) => row.forEach( ( block, j ) => {
+      if ( block ) {
+        const color  = COLORS[ block ];
+        const x      = this.x + ( j * BLOCKSIZE ) + 1;
+        const y      = this.y + ( i * BLOCKSIZE ) + 1;
+        const width  = BLOCKSIZE - 2;
+        const height = BLOCKSIZE - 2;
+
+        context.fillStyle = color;
+        context.fillRect( x, y, width, height );
       }
     })
   )}
@@ -50,8 +51,11 @@ export default class Piece {
   moveRight()    { this.x += BLOCKSIZE;                       }
 
   update( deltaTime ) {
-    this.x = Math.max( 0, this.x );
-    this.x = Math.min( this.game.width - SHAPES[ this.shape ].length * BLOCKSIZE, this.x );
+    const minX = 0;
+    const maxX = this.game.width - SHAPES[ this.shape ].length * BLOCKSIZE;
+
+    this.x = Math.max( minX, this.x );
+    this.x = Math.min( maxX, this.x );
 
     this.dropInterval = this.smooth ? 100 : 1600;
     this.dropTimer += deltaTime;
