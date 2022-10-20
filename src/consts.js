@@ -4,6 +4,8 @@ const MILLI = 1000 / FPS;
 const BLOCKSIZE = 16;
 const HEIGHT    = 320;
 const WIDTH     = 160;
+const COLUMNS   = 10;
+const ROWS      = 20;
 
 const SCORES = [ 0, 40, 100, 300, 1200 ];
 
@@ -77,9 +79,11 @@ const SHAPES = [
 export {
   BLOCKSIZE,
   COLORS,
+  COLUMNS,
   HEIGHT,
   LEVELS,
   MILLI,
+  ROWS,
   SCORES,
   SHAPES,
   SPEEDS,

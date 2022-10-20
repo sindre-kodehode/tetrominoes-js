@@ -1,9 +1,8 @@
-import { BLOCKSIZE, COLORS } from "./consts.js";
+import { BLOCKSIZE, COLORS, COLUMNS, ROWS, } from "./consts.js";
 
 export default class {
-  constructor( game ) {
-    this.game = game;
-    this.playfield = new Array( this.game.height / BLOCKSIZE ).fill( 0 );
+  constructor() {
+    this.playfield = new Array( ROWS ).fill( 0 );
     this.reset();
   }
 
@@ -11,7 +10,7 @@ export default class {
 
   reset() {
     this.playfield = this.playfield.map( () =>
-      new Array( this.game.width / BLOCKSIZE ).fill( 0 )
+      new Array( COLUMNS ).fill( 0 )
     );
   }
 
@@ -22,10 +21,10 @@ export default class {
   update( shape, x, y ) {
     shape.forEach( ( row, i ) => row.forEach( ( block, j ) => {
       if ( block ) {
-        const yIdx  = ( y / BLOCKSIZE ) + i;
-        const xIdx  = ( x / BLOCKSIZE ) + j;
-
-        this.playfield[ yIdx ][ xIdx ] = block;
+        const yIdx  = ( y + i );
+        const xIdx  = ( x + j );
+        if ( yIdx < ROWS && xIdx < COLUMNS )
+          this.playfield[ y + i ][ x + j ] = block;
       }
     }));
   }
