@@ -1,12 +1,14 @@
 import Block from "./Block.js";
 
 export default class {
-  constructor() {
+  constructor( playfield ) {
+    this.playfield = playfield;
     this.shape = this.TShape();
   }
 
   get collision() {
-    return this.shape.some( block => block.collision );
+    return this.shape.some( block => block.collision )
+        || this.playfield.collision( this.shape );
   }
 
   set column( diff ) {
@@ -17,8 +19,11 @@ export default class {
 
   set row( diff ) {
     this.shape.forEach( block => block.row += diff );
-    if ( this.collision )
+    if ( this.collision ) {
+      this.shape.forEach( block => block.row -= diff );
+      this.playfield.add( this.shape );
       this.shape = this.TShape();
+    }
   }
 
   TShape() {

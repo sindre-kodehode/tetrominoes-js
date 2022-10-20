@@ -1,46 +1,33 @@
-import { BLOCKSIZE, COLORS, COLUMNS, ROWS, } from "./consts.js";
+import { COLUMNS, ROWS, } from "./consts.js";
 
 export default class {
   constructor() {
-    this.playfield = new Array( ROWS ).fill( 0 );
-    this.reset();
-  }
-
-  gameOver() { }
-
-  reset() {
-    this.playfield = this.playfield.map( () =>
-      new Array( COLUMNS ).fill( 0 )
+    this.blocks = [];
+    this.grid = 
+      new Array( ROWS    ).fill( null ).map( () =>
+      new Array( COLUMNS ).fill( null )
     );
   }
 
-  checkLines() { }
+  add( shape ) {
+    shape.forEach( block => {
+      this.blocks.push( block );
+      this.grid[ block.row ][ block.column ] = block;
+    });
+  }
 
-  deleteLine() { }
+  collision( shape ) {
+    let collision = false;
 
-  update( shape, x, y ) {
-    shape.forEach( ( row, i ) => row.forEach( ( block, j ) => {
-      if ( block ) {
-        const yIdx  = ( y + i );
-        const xIdx  = ( x + j );
-        if ( yIdx < ROWS && xIdx < COLUMNS )
-          this.playfield[ y + i ][ x + j ] = block;
-      }
-    }));
+    shape.forEach( block => {
+      if ( block.row > 0 && this.grid[ block.row ][ block.column ] )
+        collision = true;
+    });
+
+    return collision;
   }
 
   draw( context ) {
-    this.playfield.forEach( ( row, i ) => row.forEach( ( block, j ) => {
-      if ( block ) {
-        const color  = COLORS[ block ];
-        const x      = ( j * BLOCKSIZE ) + 1;
-        const y      = ( i * BLOCKSIZE ) + 1;
-        const width  = BLOCKSIZE - 2;
-        const height = BLOCKSIZE - 2;
-
-        context.fillStyle = color;
-        context.fillRect( x, y, width, height ); 
-      }
-    }));
+    this.blocks.forEach( block => block.draw( context ) );
   }
 }

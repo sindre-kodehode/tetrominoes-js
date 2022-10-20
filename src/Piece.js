@@ -1,10 +1,10 @@
 import Shape from "./Shape.js"
 
 export default class Piece {
-  constructor( game, inputHandler, playfield ) {
+  constructor( inputHandler, playfield ) {
     this.inputHandler = inputHandler;
     this.playfield    = playfield;
-    this.shape        = new Shape();
+    this.shape        = new Shape( this.playfield );
 
     this.dropTimer    = 0;
     this.dropInterval = 600;

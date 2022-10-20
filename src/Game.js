@@ -11,8 +11,8 @@ export default class {
     this.keys     = [];
 
     this.inputHandler = new InputHandler( this );
-    this.playfield    = new Playfield( this );
-    this.piece        = new Piece( this, this.inputHandler, this.playfield );
+    this.playfield    = new Playfield();
+    this.piece        = new Piece( this.inputHandler, this.playfield );
 
     this.assignKeys();
   }
@@ -25,17 +25,10 @@ export default class {
     this.isPaused = !this.isPaused;
     this.inputHandler.unassignAll();
     this.assignKeys();
-
-    if ( this.isPaused )
-      return;
-
-    this.piece.assingKeys();
+    if ( !this.isPaused ) this.piece.assingKeys();
   }
 
   draw( context ) {
-    if ( this.isPaused )
-      return;
-
     context.clearRect( 0, 0, this.width, this.height );
     this.piece.draw( context );
     this.playfield.draw( context );
@@ -43,10 +36,6 @@ export default class {
 
   update( deltaTime ) {
     this.inputHandler.update( deltaTime );
-
-    if ( this.isPaused )
-      return;
-
-    this.piece.update( deltaTime );
+    if ( !this.isPaused ) this.piece.update( deltaTime );
   }
 }
